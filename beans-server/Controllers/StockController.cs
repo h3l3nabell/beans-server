@@ -17,9 +17,11 @@ namespace beans_server.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> AddStock([FromBody] int quantity)
         {
+            if (quantity < 0)
+                return BadRequest("Illegal Stock Theft!");
             _stock += quantity;
             await _stockHub.Clients.All.SendAsync("StockUpdated", _stock);
-            return Ok(new { Stock = _stock });
+            return Ok(new StockResponse { Stock = _stock });
         }
 
         [HttpPost("purchase")]
@@ -30,13 +32,19 @@ namespace beans_server.Controllers
 
             _stock -= quantity;
             await _stockHub.Clients.All.SendAsync("StockUpdated", _stock);
-            return Ok(new { Stock = _stock });
+            return Ok(new StockResponse { Stock = _stock });
         }
 
         [HttpGet("total")]
         public IActionResult GetTotalStock()
         {
-            return Ok(new { Stock = _stock });
+            return Ok(new StockResponse { Stock = _stock });
+        }
+
+        // Method for testing purposes only
+        internal void ResetStock()
+        {
+            _stock = 0;
         }
     }
 }
