@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace beans_server.Controllers
 {
+    [Route("api/v1/stock")]
     public class StockController : Controller
     {
         private static int _stock = 0;
