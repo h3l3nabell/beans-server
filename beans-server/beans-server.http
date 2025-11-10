@@ -1,6 +1,18 @@
 @beans_server_HostAddress = http://localhost:5073
 
-GET {{beans_server_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{beans_server_HostAddress}}/stock/add
+Content-Type: application/json
+
+4
 
 ###
+
+POST {{beans_server_HostAddress}}/stock/purchase
+Content-Type: application/json
+
+2
+
+###
+
+GET {{beans_server_HostAddress}}/stock/total
+Accept: application/json
