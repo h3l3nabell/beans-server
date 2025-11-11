@@ -21,6 +21,7 @@ namespace beans_server.Controllers
             if (quantity < 0)
                 return BadRequest("Illegal Stock Theft!");
             _stock += quantity;
+            Console.WriteLine($"Broadcasting stock update: {_stock}");
             await _stockHub.Clients.All.SendAsync("StockUpdated", _stock);
             return Ok(new StockResponse { Stock = _stock });
         }
